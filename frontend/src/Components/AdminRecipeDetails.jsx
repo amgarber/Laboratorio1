@@ -11,7 +11,7 @@ function formatTime(minutes) {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
     if (hours > 0 && remainingMinutes > 0) return `${hours}h ${remainingMinutes}m`;
-    if (hours > 0) return `${hours} hora${hours > 1 ? 's' : ''}`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''}`;
     return `${remainingMinutes} min`;
 }
 

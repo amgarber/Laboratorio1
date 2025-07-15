@@ -60,5 +60,22 @@ const createIngredient = async (req, res) => {
         res.status(500).json({ message: 'Error creating ingredient' });
     }
 };
+const deleteIngredientFromRecipe = async (req, res) => {
+    const { recipeId, ingredientId } = req.params;
 
-module.exports = { createIngredient };
+    try {
+        await prisma.recipe_Ingredient.deleteMany({
+            where: {
+                id_recipe: parseInt(recipeId),
+                id_ingredient: parseInt(ingredientId)
+            }
+        });
+
+        res.status(200).json({ message: "Ingrediente eliminado de la receta correctamente" });
+    } catch (error) {
+        console.error("❌ Error al eliminar ingrediente:", error);
+        res.status(500).json({ message: "Error al eliminar ingrediente de la receta" });
+    }
+};
+
+module.exports = { createIngredient, deleteIngredientFromRecipe };

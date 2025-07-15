@@ -3,7 +3,7 @@ import "../css/SetRecipeStepsAndIngredients.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import MultipleSelectionTag from "./MultipleSelectionTag";
-
+import { toast } from 'react-toastify';
 
 function SetRecipeStepsAndIngredients() {
     const location = useLocation();
@@ -37,12 +37,13 @@ function SetRecipeStepsAndIngredients() {
 
     const handleAddIngredient = (ingredient) => {
         const alreadyAdded = ingredients.find((ing) => ing.id === ingredient.id);
-        if (!alreadyAdded) {
+        if (!alreadyAdded && ingredient.id && ingredient.name) {
             setIngredients([...ingredients, {
                 id: ingredient.id,
                 name: ingredient.name,
                 imageUrl: ingredient.images?.[0]?.url || '',
-                quantity: 1
+                quantity: 1,
+                measurement_unit: 'g' // por defecto
             }]);
             setNewIngredient('');
             setSuggestions([]);
@@ -62,22 +63,22 @@ function SetRecipeStepsAndIngredients() {
             recipeId,
             ingredients,
             steps,
-            filters: selectedFilters  // ⬅️ agregás las tags seleccionadas
+            filters: selectedFilters
         };
-
-        console.log('Recipe data to submit:', recipeData);
 
         try {
             axios.patch('/api/recipes', recipeData)
                 .then(response => {
-                    console.log('Recipe updated successfully:', response.data);
+                    toast.success('Receta actualizada correctamente');
                     navigate('/home');
                 })
                 .catch(error => {
                     console.error('Error updating recipe:', error);
+                    toast.error('Error al actualizar la receta');
                 });
         } catch (error) {
             console.error('Error submitting recipe:', error);
+            toast.error('Error al enviar los datos');
         }
     };
 
@@ -93,7 +94,6 @@ function SetRecipeStepsAndIngredients() {
                     value={newIngredient}
                     onChange={(e) => setNewIngredient(e.target.value)}
                 />
-                <button onClick={() => handleAddIngredient({ name: newIngredient })}>Add Ingredient</button>
 
                 {suggestions.length > 0 && (
                     <ul className="suggestions-list">
@@ -116,6 +116,7 @@ function SetRecipeStepsAndIngredients() {
                                 />
                             )}
                             <span>{ingredient.name}</span>
+
                             <div className="quantity-control">
                                 <button
                                     onClick={() => {
@@ -135,6 +136,15 @@ function SetRecipeStepsAndIngredients() {
                                     }}
                                 >+</button>
                             </div>
+
+                            <button
+                                className="delete-ingredient-button"
+                                onClick={() => {
+                                    const updated = ingredients.filter((_, i) => i !== index);
+                                    setIngredients(updated);
+                                }}
+                                title="Eliminar ingrediente"
+                            >🗑️</button>
                         </li>
                     ))}
                 </ul>
@@ -149,6 +159,7 @@ function SetRecipeStepsAndIngredients() {
                     <span>{steps.length} Step{steps.length > 1 ? 's' : ''}</span>
                     <button onClick={addStep}>+</button>
                 </div>
+
                 {steps.map((step, index) => (
                     <div key={index} className="step-input">
                         <textarea
@@ -158,13 +169,12 @@ function SetRecipeStepsAndIngredients() {
                         />
                         <button onClick={() => removeStep(index)}>Remove</button>
                     </div>
-
                 ))}
             </div>
+
             <MultipleSelectionTag onChange={setSelectedFilters} />
 
             <div className="action-buttons">
-
                 <button onClick={handleSubmit}>Save Recipe</button>
                 <button onClick={() => navigate('/home')}>Cancel</button>
             </div>

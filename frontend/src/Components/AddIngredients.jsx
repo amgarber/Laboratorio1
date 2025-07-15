@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/IngredientSelector.css";
 
 const availableImages = [
@@ -42,10 +44,9 @@ const availableImages = [
     { url: "https://em-content.zobj.net/source/apple/391/shaved-ice_1f367.png", name: "Shaved Ice" }
 ];
 
-
 const IngredientSelector = () => {
     const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-    const [ingredientName, setIngredientName] = useState('');
+    const [ingredientName, setIngredientName] = useState("");
 
     const handleImageClick = (url) => {
         setSelectedImageUrl(url);
@@ -53,22 +54,22 @@ const IngredientSelector = () => {
 
     const handleAddIngredient = async () => {
         if (!selectedImageUrl || !ingredientName.trim()) {
-            alert('Please select an image and enter a name');
+            toast.warning("Seleccioná una imagen y escribí el nombre.");
             return;
         }
 
         try {
-            await axios.post('http://localhost:3001/api/ingredients/create', {
+            await axios.post("http://localhost:3001/api/ingredients/create", {
                 name: ingredientName,
                 imageUrl: selectedImageUrl,
             });
 
-            alert('Ingredient added successfully!');
+            toast.success("Ingrediente agregado con éxito 🎉");
             setSelectedImageUrl(null);
-            setIngredientName('');
+            setIngredientName("");
         } catch (error) {
-            console.error('Error adding ingredient:', error);
-            alert('Failed to add ingredient');
+            console.error("Error adding ingredient:", error);
+            toast.error("No se pudo agregar el ingrediente 😓");
         }
     };
 
@@ -83,14 +84,13 @@ const IngredientSelector = () => {
                             key={index}
                             src={img.url}
                             alt={img.name}
-                            className={`ingredient-image ${selectedImageUrl === img.url ? 'selected' : ''}`}
+                            className={`ingredient-image ${selectedImageUrl === img.url ? "selected" : ""}`}
                             onClick={() => handleImageClick(img.url)}
                         />
                     ))}
                 </div>
             </div>
 
-            {/* Solo mostramos el input y botón si seleccionó imagen */}
             {selectedImageUrl && (
                 <div className="input-section">
                     <input

@@ -48,7 +48,7 @@ function CreateRecipeOld() {
                 console.log("✅ Receta enviada:", data);
                 console.log("Receta ID:", data.data.id);
                 setCreatedRecipeId(data.data.id);
-                return data.data.id;  // 👈 devolvemos el ID
+                return data.data.id;
             } else {
                 alert(`Error: ${data.message || data.error}`);
                 return null;

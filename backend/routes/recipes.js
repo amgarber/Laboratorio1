@@ -16,6 +16,7 @@ const {
 } = require('../controllers/recipeController');
 
 const { makePrivate } = require("../controllers/approvalController");
+const {deleteIngredientFromRecipe} = require("../controllers/ingredientController");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -37,6 +38,8 @@ router.patch('/recipes/:id/make-public', makeRecipePublic);
 // Rutas compartidas
 router.patch('/recipes/:id/make-private', makePrivate);
 router.get('/:id/image', getRecipeImage);
+router.delete('/recipes/:recipeId/ingredient/:ingredientId', deleteIngredientFromRecipe);
+
 
 // Ruta general de búsqueda (explorador)
 router.get('/', getAllRecipes);
