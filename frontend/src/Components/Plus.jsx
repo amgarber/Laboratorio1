@@ -19,7 +19,7 @@ function Plus() {
 
             {/* Tarjeta blanca fija inferior */}
             <div className="white-box">
-                <div className="title">
+                <div className="title-plus">
                     <h1>Kitchen Story</h1>
                     <p>You don't have a story, learn a new recipe and say it</p>
                 </div>

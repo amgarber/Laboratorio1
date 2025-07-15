@@ -35,6 +35,8 @@ app.use('/api', require('./routes/approvalRoutes'));
 app.use('/api', emailApprovalRoutes);
 app.use('/api/chatbot', require('./routes/chatbotRoutes'));
 
+
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });
