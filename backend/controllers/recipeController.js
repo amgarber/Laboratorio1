@@ -6,11 +6,12 @@ const getAllRecipes = async (req, res) => {
     const { query, filters, ingredients } = req.query;
 
     try {
+        const ingredientIds = ingredients ? ingredients.split(',').map(Number) : [];
+
         const recipes = await prisma.recipe.findMany({
             where: {
                 AND: [
                     { Privacy_settings: 'PUBLIC' },
-
                     query
                         ? {
                             OR: [
@@ -47,37 +48,36 @@ const getAllRecipes = async (req, res) => {
                                 }
                             }
                         }
-                        : {},
-
-                    ingredients
-                        ? {
-                            ingredients: {
-                                some: {
-                                    id_ingredient: {
-                                        in: ingredients.split(',').map(Number)
-                                    }
-                                }
-                            }
-                        }
                         : {}
                 ]
             },
             include: {
                 image: true,
+                ingredients: true, // ⚠️ NECESARIO para el filtrado por AND
                 recipeTypes: {
                     include: { filter: true }
                 }
             }
         });
 
+        // Filtro por tags
         const requiredFilters = filters ? filters.split(',') : [];
 
-        const filteredRecipes = recipes.filter(recipe => {
+        const filterByTags = recipes.filter(recipe => {
             const recipeFilterNames = recipe.recipeTypes.map(rt => rt.filter.Name);
             return requiredFilters.every(f => recipeFilterNames.includes(f));
         });
 
-        const formatted = filteredRecipes.map(recipe => ({
+        // Filtro por ingredientes (AND)
+        const filteredByIngredients = ingredientIds.length > 0
+            ? filterByTags.filter(recipe => {
+                const recipeIngredientIds = recipe.ingredients.map(ing => ing.id_ingredient);
+                return ingredientIds.every(id => recipeIngredientIds.includes(id));
+            })
+            : filterByTags;
+
+        // Formato de respuesta
+        const formatted = filteredByIngredients.map(recipe => ({
             id: recipe.id,
             name: recipe.name,
             description: recipe.description,

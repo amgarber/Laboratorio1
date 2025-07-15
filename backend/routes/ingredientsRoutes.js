@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
             },
             take: 10,
             include: {
-                images: true, // 👈 esto trae las imágenes
+                images: true,
             }
         });
         res.json(ingredients);

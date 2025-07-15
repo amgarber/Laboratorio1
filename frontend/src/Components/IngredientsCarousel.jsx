@@ -7,7 +7,7 @@ function IngredientSelectorCarousel({ onChange }) {
     const [visibleIngredients, setVisibleIngredients] = useState([]);
     const [selected, setSelected] = useState({});
 
-    const pickRandomIngredients = (all, count = 10) => {
+    const pickRandomIngredients = (all, count = 25) => {
         const shuffled = [...all].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, count);
     };

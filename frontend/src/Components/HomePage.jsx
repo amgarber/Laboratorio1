@@ -112,7 +112,7 @@ function HomePage({ FormHandle }) {
                 {recipes.length > 0 && <PinterestLayout recipes={recipes} />}
             </div>
 
-            {/* Widget flotante del chatbot */}
+
             <ChatbotWidget />
 
             <ToastContainer position="top-center" autoClose={3000} />
