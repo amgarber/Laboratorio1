@@ -64,7 +64,7 @@ const IngredientSelector = () => {
                 imageUrl: selectedImageUrl,
             });
 
-            toast.success("Ingrediente agregado con éxito 🎉");
+            toast.success("Ingredient added successfully");
             setSelectedImageUrl(null);
             setIngredientName("");
         } catch (error) {
