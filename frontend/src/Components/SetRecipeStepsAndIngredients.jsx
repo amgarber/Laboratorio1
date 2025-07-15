@@ -117,24 +117,39 @@ function SetRecipeStepsAndIngredients() {
                             )}
                             <span>{ingredient.name}</span>
 
-                            <div className="quantity-control">
-                                <button
-                                    onClick={() => {
+                            <div className="ingredient-controls">
+                                <div className="quantity-control">
+                                    <button onClick={() => {
                                         const updated = [...ingredients];
                                         if (updated[index].quantity > 1) {
                                             updated[index].quantity -= 1;
                                             setIngredients(updated);
                                         }
-                                    }}
-                                >−</button>
-                                <span>{ingredient.quantity}</span>
-                                <button
-                                    onClick={() => {
+                                    }}>−
+                                    </button>
+                                    <span>{ingredient.quantity}</span>
+                                    <button onClick={() => {
                                         const updated = [...ingredients];
                                         updated[index].quantity += 1;
                                         setIngredients(updated);
+                                    }}>+
+                                    </button>
+                                </div>
+
+                                <select
+                                    value={ingredient.measurement_unit}
+                                    onChange={(e) => {
+                                        const updated = [...ingredients];
+                                        updated[index].measurement_unit = e.target.value;
+                                        setIngredients(updated);
                                     }}
-                                >+</button>
+                                >
+                                    <option value="g">g</option>
+                                    <option value="ml">ml</option>
+                                    <option value="unid">unidad</option>
+                                    <option value="teaspoon">cucharada</option>
+                                    <option value="pizca">pizca</option>
+                                </select>
                             </div>
 
                             <button
@@ -144,7 +159,8 @@ function SetRecipeStepsAndIngredients() {
                                     setIngredients(updated);
                                 }}
                                 title="Eliminar ingrediente"
-                            >🗑️</button>
+                            >🗑️
+                            </button>
                         </li>
                     ))}
                 </ul>
@@ -155,7 +171,8 @@ function SetRecipeStepsAndIngredients() {
                     <button
                         onClick={() => removeStep(steps.length - 1)}
                         disabled={steps.length <= 1}
-                    >−</button>
+                    >−
+                    </button>
                     <span>{steps.length} Step{steps.length > 1 ? 's' : ''}</span>
                     <button onClick={addStep}>+</button>
                 </div>

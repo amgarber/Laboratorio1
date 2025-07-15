@@ -207,3 +207,22 @@
 .action-buttons button:last-child:hover {
     background-color: #90a4ae;
 }
+
+.ingredient-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.quantity-control button {
+    padding: 2px 6px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.quantity-control span {
+    margin: 0 6px;
+}
