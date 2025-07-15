@@ -63,9 +63,14 @@ function CreateRecipeOld() {
     return (
         <div className="general-div">
             <div className="top-div">
-                <button type="button" className="exit-button">
-                    <img className="exit" src="/assets/exit.svg" alt="exit" />
-                </button>
+                <button
+                type="button"
+                className="exit-button"
+                onClick={() => navigate('/home')}
+            >
+                <img className="exit" src="/assets/exit.svg" alt="exit" />
+            </button>
+
                 <h2 className="title">Create Recipe</h2>
                 <button className="save-button" onClick={handleSubmit}>Save</button>
                 <button className="publish-button" onClick={handleSubmit}>Publish</button>

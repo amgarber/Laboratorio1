@@ -12,7 +12,9 @@
     text-align: center;
     margin: 0;
     padding: 20px;
+    /*
     background-color: white;
+    */
     position: sticky;
     top: 0;
     z-index: 10;
@@ -22,7 +24,9 @@
 .accordion {
     width: 80vw;
     max-width: 400px;
+    /*
     background-color: white;
+    */
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     margin: 16px auto;

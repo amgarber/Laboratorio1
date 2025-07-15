@@ -144,11 +144,11 @@ function SetRecipeStepsAndIngredients() {
                                         setIngredients(updated);
                                     }}
                                 >
-                                    <option value="g">g</option>
-                                    <option value="ml">ml</option>
-                                    <option value="unid">unidad</option>
-                                    <option value="teaspoon">cucharada</option>
-                                    <option value="pizca">pizca</option>
+                                    <option value="g">G</option>
+                                    <option value="ml">Ml</option>
+                                    <option value="unid">Unit</option>
+                                    <option value="teaspoon">Teaspoon</option>
+                                    <option value="pizca">Pinch</option>
                                 </select>
                             </div>
 
