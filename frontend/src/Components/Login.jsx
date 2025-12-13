@@ -13,7 +13,6 @@ const Login = ({ FormHandle }) => {
     const location = useLocation();
     const redirectAfterLogin = location.state?.redirectAfterLogin;
     const hasShownToast = useRef(false);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [type, setType] = useState('password');
@@ -49,7 +48,7 @@ const Login = ({ FormHandle }) => {
             });
 
             const data = await response.json();
-            console.log("🔍 Login data from backend:", data);
+            console.log(" Login data from backend:", data);
 
             if (!response.ok) {
                 setFormMessage({ text: data.message || 'Login fallido', type: 'error' });
@@ -147,7 +146,7 @@ const Login = ({ FormHandle }) => {
                             <label htmlFor="rememberMe">Remember me</label>
                         </div>
 
-                        {/* ✅ Mostrar mensaje como en Register */}
+                        {/*  Mostrar mensaje como en Register */}
                         {formMessage.text && (
                             <div className={`form-message ${formMessage.type}`}>
                                 {formMessage.text}
